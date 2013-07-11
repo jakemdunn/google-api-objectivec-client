@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +38,8 @@
 #import "GTLAnalyticsDailyUpload.m"
 #import "GTLAnalyticsDailyUploadAppend.m"
 #import "GTLAnalyticsDailyUploads.m"
+#import "GTLAnalyticsExperiment.m"
+#import "GTLAnalyticsExperiments.m"
 #import "GTLAnalyticsGaData.m"
 #import "GTLAnalyticsGoal.m"
 #import "GTLAnalyticsGoals.m"

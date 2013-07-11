@@ -26,10 +26,12 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubeVideoContentDetails (0 custom class methods, 5 custom properties)
+//   GTLYouTubeVideoContentDetails (0 custom class methods, 8 custom properties)
 
 #import "GTLYouTubeVideoContentDetails.h"
 
+#import "GTLYouTubeAccessPolicy.h"
+#import "GTLYouTubeContentRating.h"
 #import "GTLYouTubeVideoContentDetailsRegionRestriction.h"
 
 // ----------------------------------------------------------------------------
@@ -38,5 +40,6 @@
 //
 
 @implementation GTLYouTubeVideoContentDetails
-@dynamic caption, definition, dimension, duration, regionRestriction;
+@dynamic caption, contentRating, countryRestriction, definition, dimension,
+         duration, licensedContent, regionRestriction;
 @end

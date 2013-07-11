@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,8 +34,12 @@
 #import "GTLPlusActivityFeed.h"
 #import "GTLPlusComment.h"
 #import "GTLPlusCommentFeed.h"
+#import "GTLPlusItemScope.h"
+#import "GTLPlusMoment.h"
+#import "GTLPlusMomentsFeed.h"
 #import "GTLPlusPeopleFeed.h"
 #import "GTLPlusPerson.h"
+#import "GTLPlusPlace.h"
 
 #import "GTLQueryPlus.h"
 #import "GTLServicePlus.h"

@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubePlaylistListResponse (0 custom class methods, 6 custom properties)
+//   GTLYouTubePlaylistListResponse (0 custom class methods, 8 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLObject.h"
@@ -53,6 +53,9 @@
 // The ETag of the response.
 @property (copy) NSString *ETag;
 
+// Serialized EventId of the request which produced this response.
+@property (copy) NSString *eventId;
+
 // A list of playlists that match the request criteria.
 @property (retain) NSArray *items;  // of GTLYouTubePlaylist
 
@@ -70,5 +73,8 @@
 // The token that can be used as the value of the pageToken parameter to
 // retrieve the previous page in the result set.
 @property (copy) NSString *prevPageToken;
+
+// The visitorId identifies the visitor.
+@property (copy) NSString *visitorId;
 
 @end

@@ -113,7 +113,7 @@ finishedWithAuth:(GTMOAuth2Authentication *)auth
                  clientID:(NSString *)clientID
              clientSecret:(NSString *)clientSecret
          keychainItemName:(NSString *)keychainItemName
-        completionHandler:(void (^)(GTMOAuth2ViewControllerTouch *viewController, GTMOAuth2Authentication *auth, NSError *error))handler {
+        completionHandler:(GTMOAuth2ViewControllerCompletionHandler)handler {
   return [[[self alloc] initWithScope:scope
                              clientID:clientID
                          clientSecret:clientSecret
@@ -125,7 +125,7 @@ finishedWithAuth:(GTMOAuth2Authentication *)auth
            clientID:(NSString *)clientID
        clientSecret:(NSString *)clientSecret
    keychainItemName:(NSString *)keychainItemName
-  completionHandler:(void (^)(GTMOAuth2ViewControllerTouch *viewController, GTMOAuth2Authentication *auth, NSError *error))handler {
+  completionHandler:(GTMOAuth2ViewControllerCompletionHandler)handler {
   // convenient entry point for Google authentication
 
   Class signInClass = [[self class] signInClass];
@@ -206,7 +206,7 @@ finishedWithAuth:(GTMOAuth2Authentication *)auth
 + (id)controllerWithAuthentication:(GTMOAuth2Authentication *)auth
                   authorizationURL:(NSURL *)authorizationURL
                   keychainItemName:(NSString *)keychainItemName
-                 completionHandler:(void (^)(GTMOAuth2ViewControllerTouch *viewController, GTMOAuth2Authentication *auth, NSError *error))handler {
+                 completionHandler:(GTMOAuth2ViewControllerCompletionHandler)handler {
   return [[[self alloc] initWithAuthentication:auth
                               authorizationURL:authorizationURL
                               keychainItemName:keychainItemName
@@ -216,7 +216,7 @@ finishedWithAuth:(GTMOAuth2Authentication *)auth
 - (id)initWithAuthentication:(GTMOAuth2Authentication *)auth
             authorizationURL:(NSURL *)authorizationURL
             keychainItemName:(NSString *)keychainItemName
-           completionHandler:(void (^)(GTMOAuth2ViewControllerTouch *viewController, GTMOAuth2Authentication *auth, NSError *error))handler {
+           completionHandler:(GTMOAuth2ViewControllerCompletionHandler)handler {
   // fall back to the non-blocks init
   self = [self initWithAuthentication:auth
                      authorizationURL:authorizationURL
@@ -269,10 +269,20 @@ finishedWithAuth:(GTMOAuth2Authentication *)auth
 + (GTMOAuth2Authentication *)authForGoogleFromKeychainForName:(NSString *)keychainItemName
                                                      clientID:(NSString *)clientID
                                                  clientSecret:(NSString *)clientSecret {
+  return [self authForGoogleFromKeychainForName:keychainItemName
+                                       clientID:clientID
+                                   clientSecret:clientSecret
+                                          error:NULL];
+}
+
++ (GTMOAuth2Authentication *)authForGoogleFromKeychainForName:(NSString *)keychainItemName
+                                                     clientID:(NSString *)clientID
+                                                 clientSecret:(NSString *)clientSecret
+                                                        error:(NSError **)error {
   Class signInClass = [self signInClass];
   NSURL *tokenURL = [signInClass googleTokenURL];
   NSString *redirectURI = [signInClass nativeClientRedirectURI];
-  
+
   GTMOAuth2Authentication *auth;
   auth = [GTMOAuth2Authentication authenticationWithServiceProvider:kGTMOAuth2ServiceProviderGoogle
                                                            tokenURL:tokenURL
@@ -280,20 +290,23 @@ finishedWithAuth:(GTMOAuth2Authentication *)auth
                                                            clientID:clientID
                                                        clientSecret:clientSecret];
   [[self class] authorizeFromKeychainForName:keychainItemName
-                              authentication:auth];
+                              authentication:auth
+                                       error:error];
   return auth;
 }
+
 #endif
 
 + (BOOL)authorizeFromKeychainForName:(NSString *)keychainItemName
-                      authentication:(GTMOAuth2Authentication *)newAuth {
+                      authentication:(GTMOAuth2Authentication *)newAuth
+                               error:(NSError **)error {
   newAuth.accessToken = nil;
 
   BOOL didGetTokens = NO;
   GTMOAuth2Keychain *keychain = [GTMOAuth2Keychain defaultKeychain];
   NSString *password = [keychain passwordForService:keychainItemName
                                             account:kGTMOAuth2AccountName
-                                              error:nil];
+                                              error:error];
   if (password != nil) {
     [newAuth setKeysForResponseString:password];
     didGetTokens = YES;
@@ -312,15 +325,24 @@ finishedWithAuth:(GTMOAuth2Authentication *)auth
                      authentication:(GTMOAuth2Authentication *)auth {
   return [self saveParamsToKeychainForName:keychainItemName
                              accessibility:NULL
-                            authentication:auth];
+                            authentication:auth
+                                     error:NULL];
 }
 
 + (BOOL)saveParamsToKeychainForName:(NSString *)keychainItemName
                       accessibility:(CFTypeRef)accessibility
-                     authentication:(GTMOAuth2Authentication *)auth {
+                     authentication:(GTMOAuth2Authentication *)auth
+                              error:(NSError **)error {
   [self removeAuthFromKeychainForName:keychainItemName];
   // don't save unless we have a token that can really authorize requests
-  if (![auth canAuthorize]) return NO;
+  if (![auth canAuthorize]) {
+    if (error) {
+      *error = [NSError errorWithDomain:kGTMOAuth2ErrorDomain
+                                   code:kGTMOAuth2ErrorTokenUnavailable
+                               userInfo:nil];
+    }
+    return NO;
+  }
 
   if (accessibility == NULL
       && &kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly != NULL) {
@@ -334,7 +356,7 @@ finishedWithAuth:(GTMOAuth2Authentication *)auth
                     forService:keychainItemName
                  accessibility:accessibility
                        account:kGTMOAuth2AccountName
-                         error:nil];
+                         error:error];
 }
 
 - (void)loadView {
@@ -365,6 +387,10 @@ finishedWithAuth:(GTMOAuth2Authentication *)auth
 
 
 - (void)viewDidLoad {
+  [self setUpNavigation];
+}
+
+- (void)setUpNavigation {
   rightBarButtonItem_.customView = navButtonsView_;
   self.navigationItem.rightBarButtonItem = rightBarButtonItem_;
 }
@@ -613,7 +639,8 @@ static Class gSignInClass = Nil;
           CFTypeRef accessibility = self.keychainItemAccessibility;
           [[self class] saveParamsToKeychainForName:keychainItemName
                                       accessibility:accessibility
-                                     authentication:auth];
+                                     authentication:auth
+                                              error:NULL];
         } else {
           // remove the auth params from the keychain
           [[self class] removeAuthFromKeychainForName:keychainItemName];
@@ -670,6 +697,9 @@ static Class gSignInClass = Nil;
 #pragma mark Protocol implementations
 
 - (void)viewWillAppear:(BOOL)animated {
+  // See the comment on clearBrowserCookies in viewDidDisappear.
+  [self clearBrowserCookies];
+
   if (!isViewShown_) {
     isViewShown_ = YES;
     if ([self isNavigationBarTranslucent]) {
@@ -713,11 +743,16 @@ static Class gSignInClass = Nil;
 #endif
   }
 
-  // prevent the next sign-in from showing in the WebView that the user is
-  // already signed in
-  [self clearBrowserCookies];
-
   [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+  [super viewDidDisappear:animated];
+
+  // prevent the next sign-in from showing in the WebView that the user is
+  // already signed in.  It's possible for the WebView to set the cookies even
+  // after this, so we also clear them when the view first appears.
+  [self clearBrowserCookies];
 }
 
 - (void)viewDidLayoutSubviews {

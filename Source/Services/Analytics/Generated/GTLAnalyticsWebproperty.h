@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/analytics/
 // Classes:
-//   GTLAnalyticsWebproperty (0 custom class methods, 11 custom properties)
+//   GTLAnalyticsWebproperty (0 custom class methods, 14 custom properties)
 //   GTLAnalyticsWebpropertyChildLink (0 custom class methods, 2 custom properties)
 //   GTLAnalyticsWebpropertyParentLink (0 custom class methods, 2 custom properties)
 
@@ -62,11 +62,17 @@
 // identifier property maps to 'id' in JSON (to avoid Objective C's 'id').
 @property (copy) NSString *identifier;
 
+// The industry vertical/category selected for this web property.
+@property (copy) NSString *industryVertical;
+
 // Internal ID for this web property.
 @property (copy) NSString *internalWebPropertyId;
 
 // Resource type for Analytics WebProperty.
 @property (copy) NSString *kind;
+
+// Level for this web property. Possible values are STANDARD or PREMIUM.
+@property (copy) NSString *level;
 
 // Name of this web property.
 @property (copy) NSString *name;
@@ -74,6 +80,9 @@
 // Parent link for this web property. Points to the account to which this web
 // property belongs.
 @property (retain) GTLAnalyticsWebpropertyParentLink *parentLink;
+
+// Profile count for this web property.
+@property (retain) NSNumber *profileCount;  // intValue
 
 // Link for this web property.
 @property (copy) NSString *selfLink;

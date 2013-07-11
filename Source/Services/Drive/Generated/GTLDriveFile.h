@@ -26,11 +26,12 @@
 // Documentation:
 //   https://developers.google.com/drive/
 // Classes:
-//   GTLDriveFile (0 custom class methods, 38 custom properties)
+//   GTLDriveFile (0 custom class methods, 42 custom properties)
 //   GTLDriveFileExportLinks (0 custom class methods, 0 custom properties)
 //   GTLDriveFileImageMediaMetadata (0 custom class methods, 21 custom properties)
 //   GTLDriveFileIndexableText (0 custom class methods, 1 custom properties)
 //   GTLDriveFileLabels (0 custom class methods, 5 custom properties)
+//   GTLDriveFileOpenWithLinks (0 custom class methods, 0 custom properties)
 //   GTLDriveFileThumbnail (0 custom class methods, 2 custom properties)
 //   GTLDriveFileImageMediaMetadataLocation (0 custom class methods, 3 custom properties)
 
@@ -45,9 +46,11 @@
 @class GTLDriveFileImageMediaMetadataLocation;
 @class GTLDriveFileIndexableText;
 @class GTLDriveFileLabels;
+@class GTLDriveFileOpenWithLinks;
 @class GTLDriveFileThumbnail;
 @class GTLDriveParentReference;
 @class GTLDrivePermission;
+@class GTLDriveUser;
 
 // ----------------------------------------------------------------------------
 //
@@ -67,12 +70,16 @@
 // Create time for this file (formatted ISO8601 timestamp).
 @property (retain) GTLDateTime *createdDate;
 
+// A link to open this file with the user's default app for this file. Only
+// populated when the drive.apps.readonly scope is used.
+@property (copy) NSString *defaultOpenWithLink;
+
 // A short description of the file.
 // Remapped to 'descriptionProperty' to avoid NSObject's 'description'.
 @property (copy) NSString *descriptionProperty;
 
-// Short term download URL for the file. This will only be populated on files
-// with content stored in Drive.
+// Short lived download URL for the file. This is only populated for files with
+// content stored in Drive.
 @property (copy) NSString *downloadUrl;
 
 // Whether the file can be edited by the current user.
@@ -91,19 +98,19 @@
 // Links for exporting Google Docs to specific formats.
 @property (retain) GTLDriveFileExportLinks *exportLinks;
 
-// The file extension used when downloading this file. This field is set from
-// the title when inserting or uploading new content. This will only be
-// populated on files with content stored in Drive.
+// The file extension used when downloading this file. This field is read only.
+// To set the extension, include it in the title when creating the file. This is
+// only populated for files with content stored in Drive.
 @property (copy) NSString *fileExtension;
 
-// The size of the file in bytes. This will only be populated on files with
-// content stored in Drive.
+// The size of the file in bytes. This is only populated for files with content
+// stored in Drive.
 @property (retain) NSNumber *fileSize;  // longLongValue
 
 // A link to the file's icon.
 @property (copy) NSString *iconLink;
 
-// The id of the file.
+// The ID of the file.
 // identifier property maps to 'id' in JSON (to avoid Objective C's 'id').
 @property (copy) NSString *identifier;
 
@@ -120,14 +127,16 @@
 // A group of labels for the file.
 @property (retain) GTLDriveFileLabels *labels;
 
-// Name of the last user to modify this file. This will only be populated if a
-// user has edited this file.
+// The last user to modify this file.
+@property (retain) GTLDriveUser *lastModifyingUser;
+
+// Name of the last user to modify this file.
 @property (copy) NSString *lastModifyingUserName;
 
 // Last time this file was viewed by the user (formatted RFC 3339 timestamp).
 @property (retain) GTLDateTime *lastViewedByMeDate;
 
-// An MD5 checksum for the content of this file. This will only be populated on
+// An MD5 checksum for the content of this file. This is populated only for
 // files with content stored in Drive.
 @property (copy) NSString *md5Checksum;
 
@@ -145,6 +154,10 @@
 // This is only mutable on update when the setModifiedDate parameter is set.
 @property (retain) GTLDateTime *modifiedDate;
 
+// A map of the id of each of the user's apps to a link to open this file with
+// that app. Only populated when the drive.apps.readonly scope is used.
+@property (retain) GTLDriveFileOpenWithLinks *openWithLinks;
+
 // The original filename if the file was uploaded manually, or the original
 // title if the file was inserted through the API. Note that renames of the
 // title will not change the original filename. This will only be populated on
@@ -153,6 +166,9 @@
 
 // Name(s) of the owner(s) of this file.
 @property (retain) NSArray *ownerNames;  // of NSString
+
+// The owner(s) of this file.
+@property (retain) NSArray *owners;  // of GTLDriveUser
 
 // Collection of parent folders which contain this file.
 // Setting this field will put the file in all of the provided folders. On
@@ -183,6 +199,7 @@
 // The title of this file.
 @property (copy) NSString *title;
 
+// The permissions for the authenticated user on this file.
 @property (retain) GTLDrivePermission *userPermission;
 
 // A link for downloading the content of the file in a browser using cookie
@@ -294,7 +311,7 @@
 
 @interface GTLDriveFileIndexableText : GTLObject
 
-// The text to be indexed for this file
+// The text to be indexed for this file.
 @property (copy) NSString *text;
 
 @end
@@ -322,6 +339,19 @@
 // Whether this file has been viewed by this user.
 @property (retain) NSNumber *viewed;  // boolValue
 
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLDriveFileOpenWithLinks
+//
+
+@interface GTLDriveFileOpenWithLinks : GTLObject
+// This object is documented as having more properties that are NSString. Use
+// -additionalJSONKeys and -additionalPropertyForName: to get the list of
+// properties and then fetch them; or -additionalProperties to fetch them all at
+// once.
 @end
 
 

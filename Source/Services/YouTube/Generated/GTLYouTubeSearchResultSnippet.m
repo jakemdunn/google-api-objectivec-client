@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,12 +26,11 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubeSearchResultSnippet (0 custom class methods, 5 custom properties)
-//   GTLYouTubeSearchResultSnippetThumbnails (0 custom class methods, 0 custom properties)
+//   GTLYouTubeSearchResultSnippet (0 custom class methods, 6 custom properties)
 
 #import "GTLYouTubeSearchResultSnippet.h"
 
-#import "GTLYouTubeThumbnail.h"
+#import "GTLYouTubeThumbnailDetails.h"
 
 // ----------------------------------------------------------------------------
 //
@@ -39,27 +38,14 @@
 //
 
 @implementation GTLYouTubeSearchResultSnippet
-@dynamic channelId, descriptionProperty, publishedAt, thumbnails, title;
+@dynamic channelId, channelTitle, descriptionProperty, publishedAt, thumbnails,
+         title;
 
 + (NSDictionary *)propertyToJSONKeyMap {
   NSDictionary *map =
     [NSDictionary dictionaryWithObject:@"description"
                                 forKey:@"descriptionProperty"];
   return map;
-}
-
-@end
-
-
-// ----------------------------------------------------------------------------
-//
-//   GTLYouTubeSearchResultSnippetThumbnails
-//
-
-@implementation GTLYouTubeSearchResultSnippetThumbnails
-
-+ (Class)classForAdditionalProperties {
-  return [GTLYouTubeThumbnail class];
 }
 
 @end

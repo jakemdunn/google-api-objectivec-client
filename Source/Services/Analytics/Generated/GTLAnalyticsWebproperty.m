@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/analytics/
 // Classes:
-//   GTLAnalyticsWebproperty (0 custom class methods, 11 custom properties)
+//   GTLAnalyticsWebproperty (0 custom class methods, 14 custom properties)
 //   GTLAnalyticsWebpropertyChildLink (0 custom class methods, 2 custom properties)
 //   GTLAnalyticsWebpropertyParentLink (0 custom class methods, 2 custom properties)
 
@@ -38,8 +38,9 @@
 //
 
 @implementation GTLAnalyticsWebproperty
-@dynamic accountId, childLink, created, identifier, internalWebPropertyId, kind,
-         name, parentLink, selfLink, updated, websiteUrl;
+@dynamic accountId, childLink, created, identifier, industryVertical,
+         internalWebPropertyId, kind, level, name, parentLink, profileCount,
+         selfLink, updated, websiteUrl;
 
 + (NSDictionary *)propertyToJSONKeyMap {
   NSDictionary *map =

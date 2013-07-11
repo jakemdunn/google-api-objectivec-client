@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,11 @@
 #import "GTLCivicInfoElectionOfficial.h"
 #import "GTLCivicInfoElectionsQueryResponse.h"
 #import "GTLCivicInfoElectoralDistrict.h"
+#import "GTLCivicInfoGeographicDivision.h"
+#import "GTLCivicInfoOffice.h"
+#import "GTLCivicInfoOfficial.h"
 #import "GTLCivicInfoPollingLocation.h"
+#import "GTLCivicInfoRepresentativeInfoResponse.h"
 #import "GTLCivicInfoSimpleAddressType.h"
 #import "GTLCivicInfoSource.h"
 #import "GTLCivicInfoVoterInfoResponse.h"
