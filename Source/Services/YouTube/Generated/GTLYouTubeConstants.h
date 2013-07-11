@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,13 +44,42 @@ GTL_EXTERN NSString * const kGTLAuthScopeYouTubeUpload;         // "https://www.
 // View and manage your assets and associated content on YouTube
 GTL_EXTERN NSString * const kGTLAuthScopeYouTubeYoutubepartner;  // "https://www.googleapis.com/auth/youtubepartner"
 
+// BroadcastStatus
+GTL_EXTERN NSString * const kGTLYouTubeBroadcastStatusActive;   // "active"
+GTL_EXTERN NSString * const kGTLYouTubeBroadcastStatusAll;      // "all"
+GTL_EXTERN NSString * const kGTLYouTubeBroadcastStatusComplete;  // "complete"
+GTL_EXTERN NSString * const kGTLYouTubeBroadcastStatusCompleted;  // "completed"
+GTL_EXTERN NSString * const kGTLYouTubeBroadcastStatusLive;     // "live"
+GTL_EXTERN NSString * const kGTLYouTubeBroadcastStatusTesting;  // "testing"
+GTL_EXTERN NSString * const kGTLYouTubeBroadcastStatusUpcoming;  // "upcoming"
+
+// ChannelType
+GTL_EXTERN NSString * const kGTLYouTubeChannelTypeAny;   // "any"
+GTL_EXTERN NSString * const kGTLYouTubeChannelTypeShow;  // "show"
+
+// MyRating
+GTL_EXTERN NSString * const kGTLYouTubeMyRatingDislike;  // "dislike"
+GTL_EXTERN NSString * const kGTLYouTubeMyRatingLike;     // "like"
+
 // Order
 GTL_EXTERN NSString * const kGTLYouTubeOrderAlphabetical;  // "alphabetical"
 GTL_EXTERN NSString * const kGTLYouTubeOrderDate;          // "date"
 GTL_EXTERN NSString * const kGTLYouTubeOrderRating;        // "rating"
 GTL_EXTERN NSString * const kGTLYouTubeOrderRelevance;     // "relevance"
+GTL_EXTERN NSString * const kGTLYouTubeOrderTitle;         // "title"
 GTL_EXTERN NSString * const kGTLYouTubeOrderUnread;        // "unread"
+GTL_EXTERN NSString * const kGTLYouTubeOrderVideoCount;    // "videoCount"
 GTL_EXTERN NSString * const kGTLYouTubeOrderViewCount;     // "viewCount"
+
+// Rating
+GTL_EXTERN NSString * const kGTLYouTubeRatingDislike;  // "dislike"
+GTL_EXTERN NSString * const kGTLYouTubeRatingLike;     // "like"
+GTL_EXTERN NSString * const kGTLYouTubeRatingNone;     // "none"
+
+// SafeSearch
+GTL_EXTERN NSString * const kGTLYouTubeSafeSearchModerate;  // "moderate"
+GTL_EXTERN NSString * const kGTLYouTubeSafeSearchNone;      // "none"
+GTL_EXTERN NSString * const kGTLYouTubeSafeSearchStrict;    // "strict"
 
 // VideoCaption
 GTL_EXTERN NSString * const kGTLYouTubeVideoCaptionAny;         // "any"
@@ -85,3 +114,8 @@ GTL_EXTERN NSString * const kGTLYouTubeVideoLicenseYoutube;     // "youtube"
 // VideoSyndicated
 GTL_EXTERN NSString * const kGTLYouTubeVideoSyndicatedAny;   // "any"
 GTL_EXTERN NSString * const kGTLYouTubeVideoSyndicatedTrue;  // "true"
+
+// VideoType
+GTL_EXTERN NSString * const kGTLYouTubeVideoTypeAny;      // "any"
+GTL_EXTERN NSString * const kGTLYouTubeVideoTypeEpisode;  // "episode"
+GTL_EXTERN NSString * const kGTLYouTubeVideoTypeMovie;    // "movie"

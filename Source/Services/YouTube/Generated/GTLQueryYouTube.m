@@ -26,14 +26,20 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLQueryYouTube (21 custom class methods, 30 custom properties)
+//   GTLQueryYouTube (37 custom class methods, 47 custom properties)
 
 #import "GTLQueryYouTube.h"
 
 #import "GTLYouTubeActivity.h"
 #import "GTLYouTubeActivityListResponse.h"
+#import "GTLYouTubeChannel.h"
+#import "GTLYouTubeChannelBannerInsertResponse.h"
 #import "GTLYouTubeChannelListResponse.h"
 #import "GTLYouTubeGuideCategoryListResponse.h"
+#import "GTLYouTubeLiveBroadcast.h"
+#import "GTLYouTubeLiveBroadcastList.h"
+#import "GTLYouTubeLiveStream.h"
+#import "GTLYouTubeLiveStreamList.h"
 #import "GTLYouTubePlaylist.h"
 #import "GTLYouTubePlaylistItem.h"
 #import "GTLYouTubePlaylistItemListResponse.h"
@@ -41,18 +47,24 @@
 #import "GTLYouTubeSearchListResponse.h"
 #import "GTLYouTubeSubscription.h"
 #import "GTLYouTubeSubscriptionListResponse.h"
+#import "GTLYouTubeThumbnailListResponse.h"
 #import "GTLYouTubeVideo.h"
 #import "GTLYouTubeVideoCategoryListResponse.h"
+#import "GTLYouTubeVideoGetRatingResponse.h"
 #import "GTLYouTubeVideoListResponse.h"
 
 @implementation GTLQueryYouTube
 
-@dynamic categoryId, channelId, fields, forChannelId, hl, home, identifier,
-         maxResults, mine, mySubscribers, order, pageToken, part, playlistId,
-         publishedAfter, publishedBefore, q, regionCode, relatedToVideoId,
-         topicId, type, videoCaption, videoCategoryId, videoDefinition,
-         videoDimension, videoDuration, videoEmbeddable, videoId, videoLicense,
-         videoSyndicated;
+@dynamic autoLevels, broadcastStatus, categoryId, channelId, channelType,
+         displaySlate, fields, forChannelId, forContentOwner, forMine,
+         forUsername, hl, home, identifier, managedByMe, maxResults, mine,
+         myRating, mySubscribers, offsetTimeMs, onBehalfOfContentOwner,
+         onBehalfOfContentOwnerChannel, order, pageToken, part, playlistId,
+         publishedAfter, publishedBefore, q, rating, regionCode,
+         relatedToVideoId, safeSearch, stabilize, streamId, topicId, type,
+         videoCaption, videoCategoryId, videoDefinition, videoDimension,
+         videoDuration, videoEmbeddable, videoId, videoLicense, videoSyndicated,
+         videoType;
 
 + (NSDictionary *)parameterNameMap {
   NSDictionary *map =
@@ -88,6 +100,24 @@
 }
 
 #pragma mark -
+#pragma mark "channelBanners" methods
+// These create a GTLQueryYouTube object.
+
++ (id)queryForChannelBannersInsertWithObject:(GTLYouTubeChannelBannerInsertResponse *)object
+                            uploadParameters:(GTLUploadParameters *)uploadParametersOrNil {
+  if (object == nil) {
+    GTL_DEBUG_ASSERT(object != nil, @"%@ got a nil object", NSStringFromSelector(_cmd));
+    return nil;
+  }
+  NSString *methodName = @"youtube.channelBanners.insert";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.bodyObject = object;
+  query.uploadParameters = uploadParametersOrNil;
+  query.expectedObjectClass = [GTLYouTubeChannelBannerInsertResponse class];
+  return query;
+}
+
+#pragma mark -
 #pragma mark "channels" methods
 // These create a GTLQueryYouTube object.
 
@@ -96,6 +126,20 @@
   GTLQueryYouTube *query = [self queryWithMethodName:methodName];
   query.part = part;
   query.expectedObjectClass = [GTLYouTubeChannelListResponse class];
+  return query;
+}
+
++ (id)queryForChannelsUpdateWithObject:(GTLYouTubeChannel *)object
+                                  part:(NSString *)part {
+  if (object == nil) {
+    GTL_DEBUG_ASSERT(object != nil, @"%@ got a nil object", NSStringFromSelector(_cmd));
+    return nil;
+  }
+  NSString *methodName = @"youtube.channels.update";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.bodyObject = object;
+  query.part = part;
+  query.expectedObjectClass = [GTLYouTubeChannel class];
   return query;
 }
 
@@ -108,6 +152,132 @@
   GTLQueryYouTube *query = [self queryWithMethodName:methodName];
   query.part = part;
   query.expectedObjectClass = [GTLYouTubeGuideCategoryListResponse class];
+  return query;
+}
+
+#pragma mark -
+#pragma mark "liveBroadcasts" methods
+// These create a GTLQueryYouTube object.
+
++ (id)queryForLiveBroadcastsBindWithIdentifier:(NSString *)identifier
+                                          part:(NSString *)part {
+  NSString *methodName = @"youtube.liveBroadcasts.bind";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.identifier = identifier;
+  query.part = part;
+  query.expectedObjectClass = [GTLYouTubeLiveBroadcast class];
+  return query;
+}
+
++ (id)queryForLiveBroadcastsControlWithIdentifier:(NSString *)identifier
+                                             part:(NSString *)part {
+  NSString *methodName = @"youtube.liveBroadcasts.control";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.identifier = identifier;
+  query.part = part;
+  query.expectedObjectClass = [GTLYouTubeLiveBroadcast class];
+  return query;
+}
+
++ (id)queryForLiveBroadcastsDeleteWithIdentifier:(NSString *)identifier {
+  NSString *methodName = @"youtube.liveBroadcasts.delete";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.identifier = identifier;
+  return query;
+}
+
++ (id)queryForLiveBroadcastsInsertWithObject:(GTLYouTubeLiveBroadcast *)object
+                                        part:(NSString *)part {
+  if (object == nil) {
+    GTL_DEBUG_ASSERT(object != nil, @"%@ got a nil object", NSStringFromSelector(_cmd));
+    return nil;
+  }
+  NSString *methodName = @"youtube.liveBroadcasts.insert";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.bodyObject = object;
+  query.part = part;
+  query.expectedObjectClass = [GTLYouTubeLiveBroadcast class];
+  return query;
+}
+
++ (id)queryForLiveBroadcastsListWithPart:(NSString *)part {
+  NSString *methodName = @"youtube.liveBroadcasts.list";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.part = part;
+  query.expectedObjectClass = [GTLYouTubeLiveBroadcastList class];
+  return query;
+}
+
++ (id)queryForLiveBroadcastsTransitionWithBroadcastStatus:(NSString *)broadcastStatus
+                                               identifier:(NSString *)identifier
+                                                     part:(NSString *)part {
+  NSString *methodName = @"youtube.liveBroadcasts.transition";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.broadcastStatus = broadcastStatus;
+  query.identifier = identifier;
+  query.part = part;
+  query.expectedObjectClass = [GTLYouTubeLiveBroadcast class];
+  return query;
+}
+
++ (id)queryForLiveBroadcastsUpdateWithObject:(GTLYouTubeLiveBroadcast *)object
+                                        part:(NSString *)part {
+  if (object == nil) {
+    GTL_DEBUG_ASSERT(object != nil, @"%@ got a nil object", NSStringFromSelector(_cmd));
+    return nil;
+  }
+  NSString *methodName = @"youtube.liveBroadcasts.update";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.bodyObject = object;
+  query.part = part;
+  query.expectedObjectClass = [GTLYouTubeLiveBroadcast class];
+  return query;
+}
+
+#pragma mark -
+#pragma mark "liveStreams" methods
+// These create a GTLQueryYouTube object.
+
++ (id)queryForLiveStreamsDeleteWithIdentifier:(NSString *)identifier {
+  NSString *methodName = @"youtube.liveStreams.delete";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.identifier = identifier;
+  return query;
+}
+
++ (id)queryForLiveStreamsInsertWithObject:(GTLYouTubeLiveStream *)object
+                                     part:(NSString *)part {
+  if (object == nil) {
+    GTL_DEBUG_ASSERT(object != nil, @"%@ got a nil object", NSStringFromSelector(_cmd));
+    return nil;
+  }
+  NSString *methodName = @"youtube.liveStreams.insert";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.bodyObject = object;
+  query.part = part;
+  query.expectedObjectClass = [GTLYouTubeLiveStream class];
+  return query;
+}
+
++ (id)queryForLiveStreamsListWithPart:(NSString *)part {
+  NSString *methodName = @"youtube.liveStreams.list";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.part = part;
+  query.expectedObjectClass = [GTLYouTubeLiveStreamList class];
+  return query;
+}
+
++ (id)queryForLiveStreamsUpdateWithObject:(GTLYouTubeLiveStream *)object
+                                     part:(NSString *)part {
+  if (object == nil) {
+    GTL_DEBUG_ASSERT(object != nil, @"%@ got a nil object", NSStringFromSelector(_cmd));
+    return nil;
+  }
+  NSString *methodName = @"youtube.liveStreams.update";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.bodyObject = object;
+  query.part = part;
+  query.expectedObjectClass = [GTLYouTubeLiveStream class];
   return query;
 }
 
@@ -251,6 +421,20 @@
 }
 
 #pragma mark -
+#pragma mark "thumbnails" methods
+// These create a GTLQueryYouTube object.
+
++ (id)queryForThumbnailsSetWithVideoId:(NSString *)videoId
+                      uploadParameters:(GTLUploadParameters *)uploadParametersOrNil {
+  NSString *methodName = @"youtube.thumbnails.set";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.videoId = videoId;
+  query.uploadParameters = uploadParametersOrNil;
+  query.expectedObjectClass = [GTLYouTubeThumbnailListResponse class];
+  return query;
+}
+
+#pragma mark -
 #pragma mark "videoCategories" methods
 // These create a GTLQueryYouTube object.
 
@@ -273,6 +457,14 @@
   return query;
 }
 
++ (id)queryForVideosGetRatingWithIdentifier:(NSString *)identifier {
+  NSString *methodName = @"youtube.videos.getRating";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.identifier = identifier;
+  query.expectedObjectClass = [GTLYouTubeVideoGetRatingResponse class];
+  return query;
+}
+
 + (id)queryForVideosInsertWithObject:(GTLYouTubeVideo *)object
                                 part:(NSString *)part
                     uploadParameters:(GTLUploadParameters *)uploadParametersOrNil {
@@ -289,13 +481,20 @@
   return query;
 }
 
-+ (id)queryForVideosListWithIdentifier:(NSString *)identifier
-                                  part:(NSString *)part {
++ (id)queryForVideosListWithPart:(NSString *)part {
   NSString *methodName = @"youtube.videos.list";
   GTLQueryYouTube *query = [self queryWithMethodName:methodName];
-  query.identifier = identifier;
   query.part = part;
   query.expectedObjectClass = [GTLYouTubeVideoListResponse class];
+  return query;
+}
+
++ (id)queryForVideosRateWithIdentifier:(NSString *)identifier
+                                rating:(NSString *)rating {
+  NSString *methodName = @"youtube.videos.rate";
+  GTLQueryYouTube *query = [self queryWithMethodName:methodName];
+  query.identifier = identifier;
+  query.rating = rating;
   return query;
 }
 
