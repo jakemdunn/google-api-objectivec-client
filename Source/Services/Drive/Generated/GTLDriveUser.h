@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/drive/
 // Classes:
-//   GTLDriveUser (0 custom class methods, 4 custom properties)
+//   GTLDriveUser (0 custom class methods, 5 custom properties)
 //   GTLDriveUserPicture (0 custom class methods, 1 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
@@ -49,12 +49,15 @@
 // A plain text displayable name for this user.
 @property (copy) NSString *displayName;
 
-// Whether this user is the same as the authenticated user of which the request
-// was made on behalf.
+// Whether this user is the same as the authenticated user for whom the request
+// was made.
 @property (retain) NSNumber *isAuthenticatedUser;  // boolValue
 
 // This is always drive#user.
 @property (copy) NSString *kind;
+
+// The user's ID as visible in the permissions collection.
+@property (copy) NSString *permissionId;
 
 // The user's profile picture.
 @property (retain) GTLDriveUserPicture *picture;

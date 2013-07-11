@@ -39,7 +39,7 @@
 //   GTLYouTubeVideoContentDetailsRegionRestriction
 //
 
-// Region restriction of the video.
+// DEPRECATED Region restriction of the video.
 
 @interface GTLYouTubeVideoContentDetailsRegionRestriction : GTLObject
 

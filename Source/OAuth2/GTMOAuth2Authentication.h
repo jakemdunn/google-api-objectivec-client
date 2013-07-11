@@ -80,6 +80,7 @@ _EXTERN NSString* const kGTMOAuth2FetchTypeUserInfo   _INITIALIZE_AS(@"userInfo"
 
 // Token-issuance errors
 _EXTERN NSString* const kGTMOAuth2ErrorKey                  _INITIALIZE_AS(@"error");
+_EXTERN NSString* const kGTMOAuth2ErrorObjectKey            _INITIALIZE_AS(@"kGTMOAuth2ErrorObjectKey");
 
 _EXTERN NSString* const kGTMOAuth2ErrorInvalidRequest       _INITIALIZE_AS(@"invalid_request");
 _EXTERN NSString* const kGTMOAuth2ErrorInvalidClient        _INITIALIZE_AS(@"invalid_client");
@@ -93,8 +94,9 @@ _EXTERN NSString* const kGTMOAuth2ErrorInvalidScope         _INITIALIZE_AS(@"inv
 _EXTERN NSString* const kGTMOAuth2UserSignedIn              _INITIALIZE_AS(@"kGTMOAuth2UserSignedIn");
 
 // Notification for token changes
-_EXTERN NSString* const kGTMOAuth2AccessTokenRefreshed _INITIALIZE_AS(@"kGTMOAuth2AccessTokenRefreshed");
-_EXTERN NSString* const kGTMOAuth2RefreshTokenChanged  _INITIALIZE_AS(@"kGTMOAuth2RefreshTokenChanged");
+_EXTERN NSString* const kGTMOAuth2AccessTokenRefreshed     _INITIALIZE_AS(@"kGTMOAuth2AccessTokenRefreshed");
+_EXTERN NSString* const kGTMOAuth2RefreshTokenChanged      _INITIALIZE_AS(@"kGTMOAuth2RefreshTokenChanged");
+_EXTERN NSString* const kGTMOAuth2AccessTokenRefreshFailed _INITIALIZE_AS(@"kGTMOAuth2AccessTokenRefreshFailed");
 
 // Notification for WebView loading
 _EXTERN NSString* const kGTMOAuth2WebViewStartedLoading _INITIALIZE_AS(@"kGTMOAuth2WebViewStartedLoading");
@@ -120,7 +122,10 @@ _EXTERN NSString* const kGTMOAuth2NetworkFound        _INITIALIZE_AS(@"kGTMOAuth
   NSURL *tokenURL_;
   NSDate *expirationDate_;
 
+  NSString *authorizationTokenKey_;
+
   NSDictionary *additionalTokenRequestParameters_;
+  NSDictionary *additionalGrantTypeRequestParameters_;
 
   // queue of requests for authorization waiting for a valid access token
   GTMHTTPFetcher *refreshFetcher_;
@@ -152,8 +157,19 @@ _EXTERN NSString* const kGTMOAuth2NetworkFound        _INITIALIZE_AS(@"kGTMOAuth
 @property (retain) NSString *refreshScope;
 
 // Apps may optionally add parameters here to be provided to the token
-// endpoint on token requests and refreshes
+// endpoint on token requests and refreshes.
 @property (retain) NSDictionary *additionalTokenRequestParameters;
+
+// Apps may optionally add parameters here to be provided to the token
+// endpoint on specific token requests and refreshes, keyed by the grant_type.
+// For example, if a different "type" parameter is required for obtaining
+// the auth code and on refresh, this might be:
+//
+//  viewController.authentication.additionalGrantTypeRequestParameters = @{
+//    @"authorization_code" : @{ @"type" : @"code" },
+//    @"refresh_token" : @{ @"type" : @"refresh" }
+//  };
+@property (retain) NSDictionary *additionalGrantTypeRequestParameters;
 
 // Response properties
 @property (retain) NSMutableDictionary *parameters;
@@ -215,6 +231,11 @@ _EXTERN NSString* const kGTMOAuth2NetworkFound        _INITIALIZE_AS(@"kGTMOAuth
 // GTMOAuth2ParserClass informal protocol. If this property is
 // not set, the class SBJSON must be available in the runtime.
 @property (assign) Class parserClass;
+
+// Key for the response parameter used for the authorization header; by default,
+// "access_token" is used, but some servers may expect alternatives, like
+// "id_token".
+@property (copy) NSString *authorizationTokenKey;
 
 // Convenience method for creating an authentication object
 + (id)authenticationWithServiceProvider:(NSString *)serviceProvider
@@ -326,6 +347,8 @@ _EXTERN NSString* const kGTMOAuth2NetworkFound        _INITIALIZE_AS(@"kGTMOAuth
 + (NSString *)encodedQueryParametersForDictionary:(NSDictionary *)dict;
 
 + (NSDictionary *)dictionaryWithResponseString:(NSString *)responseStr;
+
++ (NSDictionary *)dictionaryWithJSONData:(NSData *)data;
 
 + (NSString *)scopeWithStrings:(NSString *)firsStr, ... NS_REQUIRES_NIL_TERMINATION;
 @end

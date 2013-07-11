@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,16 +29,20 @@
 #import "GTLPlusConstants.h"
 
 // Authorization scope
-NSString * const kGTLAuthScopePlusMe = @"https://www.googleapis.com/auth/plus.me";
+NSString * const kGTLAuthScopePlusLogin = @"https://www.googleapis.com/auth/plus.login";
+NSString * const kGTLAuthScopePlusMe    = @"https://www.googleapis.com/auth/plus.me";
 
 // Collection
 NSString * const kGTLPlusCollectionPlusoners = @"plusoners";
 NSString * const kGTLPlusCollectionPublic    = @"public";
 NSString * const kGTLPlusCollectionResharers = @"resharers";
+NSString * const kGTLPlusCollectionVault     = @"vault";
+NSString * const kGTLPlusCollectionVisible   = @"visible";
 
 // OrderBy
-NSString * const kGTLPlusOrderByBest   = @"best";
-NSString * const kGTLPlusOrderByRecent = @"recent";
+NSString * const kGTLPlusOrderByAlphabetical = @"alphabetical";
+NSString * const kGTLPlusOrderByBest         = @"best";
+NSString * const kGTLPlusOrderByRecent       = @"recent";
 
 // SortOrder
 NSString * const kGTLPlusSortOrderAscending  = @"ascending";

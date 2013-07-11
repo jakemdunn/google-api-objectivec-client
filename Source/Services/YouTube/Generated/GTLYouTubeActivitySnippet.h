@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,7 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubeActivitySnippet (0 custom class methods, 7 custom properties)
-//   GTLYouTubeActivitySnippetThumbnails (0 custom class methods, 0 custom properties)
+//   GTLYouTubeActivitySnippet (0 custom class methods, 8 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLObject.h"
@@ -35,8 +34,7 @@
   #import "GTLObject.h"
 #endif
 
-@class GTLYouTubeActivitySnippetThumbnails;
-@class GTLYouTubeThumbnail;
+@class GTLYouTubeThumbnailDetails;
 
 // ----------------------------------------------------------------------------
 //
@@ -52,6 +50,9 @@
 // activity.
 @property (copy) NSString *channelId;
 
+// Channel title for the channel responsible for this activity
+@property (copy) NSString *channelTitle;
+
 // The description of the resource primarily associated with the activity.
 // Remapped to 'descriptionProperty' to avoid NSObject's 'description'.
 @property (copy) NSString *descriptionProperty;
@@ -64,7 +65,7 @@
 // value.
 @property (copy) NSString *groupId;
 
-// The date and time that the activity occurred. The value is specified in ISO
+// The date and time that the video was uploaded. The value is specified in ISO
 // 8601 (YYYY-MM-DDThh:mm:ss.sZ) format.
 @property (retain) GTLDateTime *publishedAt;
 
@@ -72,7 +73,7 @@
 // associated with the activity. For each object in the map, the key is the name
 // of the thumbnail image, and the value is an object that contains other
 // information about the thumbnail.
-@property (retain) GTLYouTubeActivitySnippetThumbnails *thumbnails;
+@property (retain) GTLYouTubeThumbnailDetails *thumbnails;
 
 // The title of the resource primarily associated with the activity.
 @property (copy) NSString *title;
@@ -80,17 +81,4 @@
 // The type of activity that the resource describes.
 @property (copy) NSString *type;
 
-@end
-
-
-// ----------------------------------------------------------------------------
-//
-//   GTLYouTubeActivitySnippetThumbnails
-//
-
-@interface GTLYouTubeActivitySnippetThumbnails : GTLObject
-// This object is documented as having more properties that are
-// GTLYouTubeThumbnail. Use -additionalJSONKeys and -additionalPropertyForName:
-// to get the list of properties and then fetch them; or -additionalProperties
-// to fetch them all at once.
 @end

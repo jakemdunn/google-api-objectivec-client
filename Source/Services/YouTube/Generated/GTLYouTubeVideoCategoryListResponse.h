@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubeVideoCategoryListResponse (0 custom class methods, 3 custom properties)
+//   GTLYouTubeVideoCategoryListResponse (0 custom class methods, 5 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLObject.h"
@@ -52,6 +52,9 @@
 // The ETag of the response.
 @property (copy) NSString *ETag;
 
+// Serialized EventId of the request which produced this response.
+@property (copy) NSString *eventId;
+
 // A list of video categories that can be associated with YouTube videos. In
 // this map, the video category ID is the map key, and its value is the
 // corresponding videoCategory resource.
@@ -60,5 +63,8 @@
 // The type of the API response. For this operation, the value will be
 // youtube#videoCategoryListResponse.
 @property (copy) NSString *kind;
+
+// The visitorId identifies the visitor.
+@property (copy) NSString *visitorId;
 
 @end

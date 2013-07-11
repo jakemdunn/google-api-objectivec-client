@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubeChannel (0 custom class methods, 8 custom properties)
+//   GTLYouTubeChannel (0 custom class methods, 11 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLObject.h"
@@ -34,11 +34,14 @@
   #import "GTLObject.h"
 #endif
 
+@class GTLYouTubeChannelBrandingSettings;
 @class GTLYouTubeChannelContentDetails;
+@class GTLYouTubeChannelConversionPings;
 @class GTLYouTubeChannelSnippet;
 @class GTLYouTubeChannelStatistics;
 @class GTLYouTubeChannelStatus;
 @class GTLYouTubeChannelTopicDetails;
+@class GTLYouTubeInvideoPromotion;
 
 // ----------------------------------------------------------------------------
 //
@@ -49,9 +52,17 @@
 
 @interface GTLYouTubeChannel : GTLObject
 
+// The brandingSettings object encapsulates information about the branding of
+// the channel.
+@property (retain) GTLYouTubeChannelBrandingSettings *brandingSettings;
+
 // The contentDetails object encapsulates information about the channel's
 // content.
 @property (retain) GTLYouTubeChannelContentDetails *contentDetails;
+
+// The conversionPings object encapsulates information about conversion pings
+// that need to be respected by the channel.
+@property (retain) GTLYouTubeChannelConversionPings *conversionPings;
 
 // The ETag for the channel resource.
 @property (copy) NSString *ETag;
@@ -59,6 +70,10 @@
 // The ID that YouTube uses to uniquely identify the channel.
 // identifier property maps to 'id' in JSON (to avoid Objective C's 'id').
 @property (copy) NSString *identifier;
+
+// The invideoPromotion object encapsulates information about promotion campaign
+// associated with the channel.
+@property (retain) GTLYouTubeInvideoPromotion *invideoPromotion;
 
 // The type of the API resource. For channel resources, the value will be
 // youtube#channel.

@@ -26,7 +26,8 @@
 // Documentation:
 //   https://developers.google.com/+/api/
 // Classes:
-//   GTLPlusPerson (0 custom class methods, 26 custom properties)
+//   GTLPlusPerson (0 custom class methods, 27 custom properties)
+//   GTLPlusPersonAgeRange (0 custom class methods, 2 custom properties)
 //   GTLPlusPersonCover (0 custom class methods, 3 custom properties)
 //   GTLPlusPersonEmailsItem (0 custom class methods, 3 custom properties)
 //   GTLPlusPersonImage (0 custom class methods, 1 custom properties)
@@ -43,6 +44,7 @@
   #import "GTLObject.h"
 #endif
 
+@class GTLPlusPersonAgeRange;
 @class GTLPlusPersonCover;
 @class GTLPlusPersonCoverCoverInfo;
 @class GTLPlusPersonCoverCoverPhoto;
@@ -63,6 +65,9 @@
 // A short biography for this person.
 @property (copy) NSString *aboutMe;
 
+// The age range of the person.
+@property (retain) GTLPlusPersonAgeRange *ageRange;
+
 // The person's date of birth, represented as YYYY-MM-DD.
 @property (copy) NSString *birthday;
 
@@ -82,7 +87,9 @@
 // The name of this person, suitable for display.
 @property (copy) NSString *displayName;
 
-// A list of email addresses for this person.
+// A list of email addresses that this person has set to public on their Google+
+// profile. You can also use the userinfo.email scope to retrieve an
+// authenticated user's email address.
 @property (retain) NSArray *emails;  // of GTLPlusPersonEmailsItem
 
 // ETag of this response for caching purposes.
@@ -93,12 +100,6 @@
 // - "female" - Female gender.
 // - "other" - Other.
 @property (copy) NSString *gender;
-
-// If "true", indicates that the person has installed the app that is making the
-// request and has chosen to expose this install state to the caller. A value of
-// "false" indicates that the install state cannot be determined (it is either
-// not installed or the person has chosen to keep this information private).
-@property (retain) NSNumber *hasApp;  // boolValue
 
 // The ID of this person.
 // identifier property maps to 'id' in JSON (to avoid Objective C's 'id').
@@ -112,6 +113,9 @@
 
 // Identifies this resource as a person. Value: "plus#person".
 @property (copy) NSString *kind;
+
+// The user's preferred language for rendering.
+@property (copy) NSString *language;
 
 // An object representation of the individual components of a person's name.
 @property (retain) GTLPlusPersonName *name;
@@ -156,6 +160,22 @@
 
 // Whether the person or Google+ Page has been verified.
 @property (retain) NSNumber *verified;  // boolValue
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLPlusPersonAgeRange
+//
+
+@interface GTLPlusPersonAgeRange : GTLObject
+
+// The age range's upper bound, if any.
+@property (retain) NSNumber *max;  // intValue
+
+// The age range's lower bound, if any.
+@property (retain) NSNumber *min;  // intValue
 
 @end
 
@@ -310,14 +330,13 @@
 
 @interface GTLPlusPersonUrlsItem : GTLObject
 
-// If "true", this URL is the person's primary URL.
-@property (retain) NSNumber *primary;  // boolValue
+// The label of the URL.
+@property (copy) NSString *label;
 
 // The type of URL. Possible values are:
-// - "home" - URL for home.
-// - "work" - URL for work.
-// - "blog" - URL for blog.
-// - "profile" - URL for profile.
+// - "otherProfile" - URL for another profile.
+// - "contributor" - URL for which this person is a contributor to.
+// - "website" - URL for this Google+ Page's primary website.
 // - "other" - Other.
 @property (copy) NSString *type;
 
