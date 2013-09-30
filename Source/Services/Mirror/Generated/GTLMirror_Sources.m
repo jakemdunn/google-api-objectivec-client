@@ -33,6 +33,7 @@
 
 #import "GTLMirrorAttachment.m"
 #import "GTLMirrorAttachmentsListResponse.m"
+#import "GTLMirrorCommand.m"
 #import "GTLMirrorContact.m"
 #import "GTLMirrorContactsListResponse.m"
 #import "GTLMirrorLocation.m"

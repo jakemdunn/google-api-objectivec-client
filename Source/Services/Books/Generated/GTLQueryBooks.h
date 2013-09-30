@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/books/docs/v1/getting_started
 // Classes:
-//   GTLQueryBooks (35 custom class methods, 52 custom properties)
+//   GTLQueryBooks (37 custom class methods, 56 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLQuery.h"
@@ -64,10 +64,12 @@
 @property (copy) NSString *driveDocumentId;
 @property (copy) NSString *endOffset;
 @property (copy) NSString *endPosition;
+@property (retain) NSArray *features;  // of NSString
 @property (copy) NSString *filter;
 @property (assign) NSInteger h;
 @property (copy) NSString *langRestrict;
 @property (copy) NSString *layerId;
+@property (retain) NSArray *layerIds;  // of NSString
 @property (copy) NSString *libraryRestrict;
 @property (copy) NSString *locale;
 @property (assign) NSUInteger maxResults;
@@ -83,9 +85,11 @@
 @property (retain) NSArray *processingState;  // of NSString
 @property (copy) NSString *projection;
 @property (copy) NSString *q;
+@property (copy) NSString *rating;
 @property (assign) NSInteger scale;
 @property (copy) NSString *shelf;
 @property (assign) BOOL showDeleted;
+@property (assign) BOOL showOnlySummaryInResponse;
 @property (assign) BOOL showPreorders;
 @property (copy) NSString *source;
 @property (assign) NSUInteger startIndex;
@@ -374,6 +378,8 @@
 //   nonce: The client nonce value.
 //   cpksver: The device/version ID from which to release the restriction.
 //  Optional:
+//   features: List of features supported by the client, i.e., 'RENTALS'
+//      kGTLBooksFeaturesRentals: Client supports rentals.
 //   locale: ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.
 //   showPreorders: Set to true to show pre-ordered books. Defaults to false.
 //   volumeIds: The volume(s) to request download restrictions for.
@@ -412,6 +418,8 @@
 // Method: books.mylibrary.annotations.insert
 // Inserts a new annotation.
 //  Optional:
+//   showOnlySummaryInResponse: Requests that only the summary of the specified
+//     layer be provided in the response.
 //   source: String to identify the originator of this request.
 //  Authorization scope(s):
 //   kGTLAuthScopeBooks
@@ -439,6 +447,17 @@
 //   kGTLAuthScopeBooks
 // Fetches a GTLBooksAnnotations.
 + (id)queryForMylibraryAnnotationsList;
+
+// Method: books.mylibrary.annotations.summary
+// Gets the summary of specified layers.
+//  Required:
+//   layerIds: Array of layer IDs to get the summary for.
+//   volumeId: Volume id to get the summary for.
+//  Authorization scope(s):
+//   kGTLAuthScopeBooks
+// Fetches a GTLBooksAnnotationsSummary.
++ (id)queryForMylibraryAnnotationsSummaryWithLayerIds:(NSArray *)layerIds
+                                             volumeId:(NSString *)volumeId;
 
 // Method: books.mylibrary.annotations.update
 // Updates an existing annotation.
@@ -687,8 +706,11 @@
 //  Optional:
 //   acquireMethod: How the book was aquired
 //      kGTLBooksAcquireMethodPreordered: Preordered books (not yet available)
+//      kGTLBooksAcquireMethodPreviouslyRented: User-rented books past their
+//        expiration time
 //      kGTLBooksAcquireMethodPublicDomain: Public domain books
 //      kGTLBooksAcquireMethodPurchased: Purchased books
+//      kGTLBooksAcquireMethodRented: User-rented books
 //      kGTLBooksAcquireMethodSample: Sample books
 //      kGTLBooksAcquireMethodUploaded: User uploaded books
 //   locale: ISO-639-1 language and ISO-3166-1 country code. Ex:'en_US'. Used
@@ -723,6 +745,24 @@
 //   kGTLAuthScopeBooks
 // Fetches a GTLBooksVolumes.
 + (id)queryForVolumesRecommendedList;
+
+// Method: books.volumes.recommended.rate
+// Rate a recommended book for the current user.
+//  Required:
+//   rating: Rating to be given to the volume.
+//      kGTLBooksRatingHaveIt: Rating indicating a dismissal due to ownership.
+//      kGTLBooksRatingNotInterested: Rating indicating a negative dismissal of
+//        a volume.
+//   volumeId: ID of the source volume.
+//  Optional:
+//   locale: ISO-639-1 language and ISO-3166-1 country code. Ex: 'en_US'. Used
+//     for generating recommendations.
+//   source: String to identify the originator of this request.
+//  Authorization scope(s):
+//   kGTLAuthScopeBooks
+// Fetches a GTLBooksVolumesRecommendedRateResponse.
++ (id)queryForVolumesRecommendedRateWithRating:(NSString *)rating
+                                      volumeId:(NSString *)volumeId;
 
 #pragma mark -
 #pragma mark "volumes.useruploaded" methods

@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubeChannel (0 custom class methods, 11 custom properties)
+//   GTLYouTubeChannel (0 custom class methods, 12 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLObject.h"
@@ -34,6 +34,7 @@
   #import "GTLObject.h"
 #endif
 
+@class GTLYouTubeChannelAuditDetails;
 @class GTLYouTubeChannelBrandingSettings;
 @class GTLYouTubeChannelContentDetails;
 @class GTLYouTubeChannelConversionPings;
@@ -52,6 +53,10 @@
 
 @interface GTLYouTubeChannel : GTLObject
 
+// The auditionDetails object encapsulates channel data that is relevant for
+// YouTube Partners during the audition process.
+@property (retain) GTLYouTubeChannelAuditDetails *auditDetails;
+
 // The brandingSettings object encapsulates information about the branding of
 // the channel.
 @property (retain) GTLYouTubeChannelBrandingSettings *brandingSettings;
@@ -64,7 +69,7 @@
 // that need to be respected by the channel.
 @property (retain) GTLYouTubeChannelConversionPings *conversionPings;
 
-// The ETag for the channel resource.
+// Etag of this resource.
 @property (copy) NSString *ETag;
 
 // The ID that YouTube uses to uniquely identify the channel.
@@ -75,8 +80,7 @@
 // associated with the channel.
 @property (retain) GTLYouTubeInvideoPromotion *invideoPromotion;
 
-// The type of the API resource. For channel resources, the value will be
-// youtube#channel.
+// The kind, fixed to "youtube#channel".
 @property (copy) NSString *kind;
 
 // The snippet object contains basic details about the channel, such as its

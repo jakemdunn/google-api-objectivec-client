@@ -33,6 +33,8 @@
 
 #import "GTLAnalyticsAccount.m"
 #import "GTLAnalyticsAccounts.m"
+#import "GTLAnalyticsColumn.m"
+#import "GTLAnalyticsColumns.m"
 #import "GTLAnalyticsCustomDataSource.m"
 #import "GTLAnalyticsCustomDataSources.m"
 #import "GTLAnalyticsDailyUpload.m"
@@ -46,6 +48,7 @@
 #import "GTLAnalyticsMcfData.m"
 #import "GTLAnalyticsProfile.m"
 #import "GTLAnalyticsProfiles.m"
+#import "GTLAnalyticsRealtimeData.m"
 #import "GTLAnalyticsSegment.m"
 #import "GTLAnalyticsSegments.m"
 #import "GTLAnalyticsWebproperties.m"

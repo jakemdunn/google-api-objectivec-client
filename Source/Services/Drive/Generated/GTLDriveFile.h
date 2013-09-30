@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/drive/
 // Classes:
-//   GTLDriveFile (0 custom class methods, 42 custom properties)
+//   GTLDriveFile (0 custom class methods, 45 custom properties)
 //   GTLDriveFileExportLinks (0 custom class methods, 0 custom properties)
 //   GTLDriveFileImageMediaMetadata (0 custom class methods, 21 custom properties)
 //   GTLDriveFileIndexableText (0 custom class methods, 1 custom properties)
@@ -50,6 +50,7 @@
 @class GTLDriveFileThumbnail;
 @class GTLDriveParentReference;
 @class GTLDrivePermission;
+@class GTLDriveProperty;
 @class GTLDriveUser;
 
 // ----------------------------------------------------------------------------
@@ -66,6 +67,9 @@
 
 // Whether this file is in the appdata folder.
 @property (retain) NSNumber *appDataContents;  // boolValue
+
+// Whether the file can be copied by the current user.
+@property (retain) NSNumber *copyable;  // boolValue
 
 // Create time for this file (formatted ISO8601 timestamp).
 @property (retain) GTLDateTime *createdDate;
@@ -106,6 +110,10 @@
 // The size of the file in bytes. This is only populated for files with content
 // stored in Drive.
 @property (retain) NSNumber *fileSize;  // longLongValue
+
+// The ID of the file's head revision. This will only be populated for files
+// with content stored in Drive.
+@property (copy) NSString *headRevisionId;
 
 // A link to the file's icon.
 @property (copy) NSString *iconLink;
@@ -175,6 +183,9 @@
 // insert, if no folders are provided, the file will be placed in the default
 // root folder.
 @property (retain) NSArray *parents;  // of GTLDriveParentReference
+
+// The list of properties.
+@property (retain) NSArray *properties;  // of GTLDriveProperty
 
 // The number of quota bytes used by this file.
 @property (retain) NSNumber *quotaBytesUsed;  // longLongValue
@@ -324,7 +335,7 @@
 
 @interface GTLDriveFileLabels : GTLObject
 
-// Whether this file is hidden from the user.
+// Deprecated.
 @property (retain) NSNumber *hidden;  // boolValue
 
 // Whether viewers are prevented from downloading this file.

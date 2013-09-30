@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,12 +39,12 @@
 //   GTLYouTubeGeoPoint
 //
 
-// A geoPoint holds geo location information associated with a YouTube resource.
+// Geographical coordinates of a point, in WGS84.
 
 @interface GTLYouTubeGeoPoint : GTLObject
 
-// Altitude above the Earth, in meters.
-@property (retain) NSNumber *elevation;  // doubleValue
+// Altitude above the reference ellipsoid, in meters.
+@property (retain) NSNumber *altitude;  // doubleValue
 
 // Latitude in degrees.
 @property (retain) NSNumber *latitude;  // doubleValue

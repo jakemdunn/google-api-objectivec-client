@@ -26,11 +26,12 @@
 // Documentation:
 //   https://developers.google.com/analytics/
 // Classes:
-//   GTLQueryAnalytics (17 custom class methods, 20 custom properties)
+//   GTLQueryAnalytics (19 custom class methods, 21 custom properties)
 
 #import "GTLQueryAnalytics.h"
 
 #import "GTLAnalyticsAccounts.h"
+#import "GTLAnalyticsColumns.h"
 #import "GTLAnalyticsCustomDataSources.h"
 #import "GTLAnalyticsDailyUploadAppend.h"
 #import "GTLAnalyticsDailyUploads.h"
@@ -40,6 +41,7 @@
 #import "GTLAnalyticsGoals.h"
 #import "GTLAnalyticsMcfData.h"
 #import "GTLAnalyticsProfiles.h"
+#import "GTLAnalyticsRealtimeData.h"
 #import "GTLAnalyticsSegments.h"
 #import "GTLAnalyticsWebproperties.h"
 
@@ -47,7 +49,8 @@
 
 @dynamic accountId, appendNumber, customDataSourceId, date, dimensions, endDate,
          experimentId, fields, filters, ids, maxResults, metrics, profileId,
-         reset, segment, sort, startDate, startIndex, type, webPropertyId;
+         reportType, reset, segment, sort, startDate, startIndex, type,
+         webPropertyId;
 
 + (NSDictionary *)parameterNameMap {
   NSDictionary *map =
@@ -93,6 +96,20 @@
   query.endDate = endDate;
   query.metrics = metrics;
   query.expectedObjectClass = [GTLAnalyticsMcfData class];
+  return query;
+}
+
+#pragma mark -
+#pragma mark "data.realtime" methods
+// These create a GTLQueryAnalytics object.
+
++ (id)queryForDataRealtimeGetWithIds:(NSString *)ids
+                             metrics:(NSString *)metrics {
+  NSString *methodName = @"analytics.data.realtime.get";
+  GTLQueryAnalytics *query = [self queryWithMethodName:methodName];
+  query.ids = ids;
+  query.metrics = metrics;
+  query.expectedObjectClass = [GTLAnalyticsRealtimeData class];
   return query;
 }
 
@@ -327,6 +344,18 @@
   GTLQueryAnalytics *query = [self queryWithMethodName:methodName];
   query.accountId = accountId;
   query.expectedObjectClass = [GTLAnalyticsWebproperties class];
+  return query;
+}
+
+#pragma mark -
+#pragma mark "metadata.columns" methods
+// These create a GTLQueryAnalytics object.
+
++ (id)queryForMetadataColumnsListWithReportType:(NSString *)reportType {
+  NSString *methodName = @"analytics.metadata.columns.list";
+  GTLQueryAnalytics *query = [self queryWithMethodName:methodName];
+  query.reportType = reportType;
+  query.expectedObjectClass = [GTLAnalyticsColumns class];
   return query;
 }
 

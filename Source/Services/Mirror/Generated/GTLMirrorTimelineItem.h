@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/glass
 // Classes:
-//   GTLMirrorTimelineItem (0 custom class methods, 26 custom properties)
+//   GTLMirrorTimelineItem (0 custom class methods, 27 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLObject.h"
@@ -104,10 +104,7 @@
 // contents are preserved.
 @property (copy) NSString *html;
 
-// Additional pages of HTML content associated with this item. If this field is
-// specified, the item will be displayed as a bundle, with the html field as the
-// cover. It is an error to specify this field without specifying the html
-// field.
+// This field is deprecated, use the html property with pagination instead.
 @property (retain) NSArray *htmlPages;  // of NSString
 
 // The ID of the timeline item. This is unique within a user's timeline.
@@ -170,9 +167,22 @@
 // The speakable version of the content of this item. Along with the READ_ALOUD
 // menu item, use this field to provide text that would be clearer when read
 // aloud, or to provide extended information to what is displayed visually on
-// Glass. If you specified html content, use this property instead of text to
-// specify the text to read aloud.
+// Glass.
+// Glassware should also specify the speakableType field, which will be spoken
+// before this text in cases where the additional context is useful, for example
+// when the user requests that the item be read aloud following a notification.
 @property (copy) NSString *speakableText;
+
+// A speakable description of the type of this item. This will be announced to
+// the user prior to reading the content of the item in cases where the
+// additional context is useful, for example when the user requests that the
+// item be read aloud following a notification.
+// This should be a short, simple noun phrase such as "Email", "Text message",
+// or "Daily Planet News Update".
+// Glassware are encouraged to populate this field for every timeline item, even
+// if the item does not contain speakableText or text so that the user can learn
+// the type of the item without looking at the screen.
+@property (copy) NSString *speakableType;
 
 // Text content of this item.
 @property (copy) NSString *text;

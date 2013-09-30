@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubeInvideoTiming (0 custom class methods, 2 custom properties)
+//   GTLYouTubeInvideoTiming (0 custom class methods, 3 custom properties)
 
 #import "GTLYouTubeInvideoTiming.h"
 
@@ -36,5 +36,5 @@
 //
 
 @implementation GTLYouTubeInvideoTiming
-@dynamic offsetMs, type;
+@dynamic durationMs, offsetMs, type;
 @end

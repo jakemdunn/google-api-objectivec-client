@@ -40,8 +40,10 @@ GTL_EXTERN NSString * const kGTLAuthScopeBooks;  // "https://www.googleapis.com/
 
 // AcquireMethod
 GTL_EXTERN NSString * const kGTLBooksAcquireMethodPreordered;   // "PREORDERED"
+GTL_EXTERN NSString * const kGTLBooksAcquireMethodPreviouslyRented;  // "PREVIOUSLY_RENTED"
 GTL_EXTERN NSString * const kGTLBooksAcquireMethodPublicDomain;  // "PUBLIC_DOMAIN"
 GTL_EXTERN NSString * const kGTLBooksAcquireMethodPurchased;    // "PURCHASED"
+GTL_EXTERN NSString * const kGTLBooksAcquireMethodRented;       // "RENTED"
 GTL_EXTERN NSString * const kGTLBooksAcquireMethodSample;       // "SAMPLE"
 GTL_EXTERN NSString * const kGTLBooksAcquireMethodUploaded;     // "UPLOADED"
 
@@ -59,6 +61,9 @@ GTL_EXTERN NSString * const kGTLBooksAssociationEndOfVolume;  // "end-of-volume"
 
 // Download
 GTL_EXTERN NSString * const kGTLBooksDownloadEpub;  // "epub"
+
+// Features
+GTL_EXTERN NSString * const kGTLBooksFeaturesRentals;  // "RENTALS"
 
 // Filter
 GTL_EXTERN NSString * const kGTLBooksFilterEbooks;      // "ebooks"
@@ -88,3 +93,7 @@ GTL_EXTERN NSString * const kGTLBooksProcessingStateRunning;    // "RUNNING"
 // Projection
 GTL_EXTERN NSString * const kGTLBooksProjectionFull;  // "full"
 GTL_EXTERN NSString * const kGTLBooksProjectionLite;  // "lite"
+
+// Rating
+GTL_EXTERN NSString * const kGTLBooksRatingHaveIt;         // "HAVE_IT"
+GTL_EXTERN NSString * const kGTLBooksRatingNotInterested;  // "NOT_INTERESTED"

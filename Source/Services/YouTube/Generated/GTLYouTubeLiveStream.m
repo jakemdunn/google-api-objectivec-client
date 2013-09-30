@@ -26,11 +26,12 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubeLiveStream (0 custom class methods, 6 custom properties)
+//   GTLYouTubeLiveStream (0 custom class methods, 7 custom properties)
 
 #import "GTLYouTubeLiveStream.h"
 
-#import "GTLYouTubeLiveStreamCdn.h"
+#import "GTLYouTubeCdnSettings.h"
+#import "GTLYouTubeLiveStreamContentDetails.h"
 #import "GTLYouTubeLiveStreamSnippet.h"
 #import "GTLYouTubeLiveStreamStatus.h"
 
@@ -40,7 +41,7 @@
 //
 
 @implementation GTLYouTubeLiveStream
-@dynamic cdn, ETag, identifier, kind, snippet, status;
+@dynamic cdn, contentDetails, ETag, identifier, kind, snippet, status;
 
 + (NSDictionary *)propertyToJSONKeyMap {
   NSDictionary *map =

@@ -30,6 +30,8 @@
 
 #import "GTLAnalyticsAccount.h"
 #import "GTLAnalyticsAccounts.h"
+#import "GTLAnalyticsColumn.h"
+#import "GTLAnalyticsColumns.h"
 #import "GTLAnalyticsCustomDataSource.h"
 #import "GTLAnalyticsCustomDataSources.h"
 #import "GTLAnalyticsDailyUpload.h"
@@ -43,6 +45,7 @@
 #import "GTLAnalyticsMcfData.h"
 #import "GTLAnalyticsProfile.h"
 #import "GTLAnalyticsProfiles.h"
+#import "GTLAnalyticsRealtimeData.h"
 #import "GTLAnalyticsSegment.h"
 #import "GTLAnalyticsSegments.h"
 #import "GTLAnalyticsWebproperties.h"

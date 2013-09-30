@@ -156,7 +156,7 @@ static NSString *const kValidFileName = @"gettysburgaddress.txt";
     ++fetchStoppedNotificationCount_;
   }
 
-  STAssertTrue(fetchStartedNotificationCount_ <= fetchStartedNotificationCount_,
+  STAssertTrue(fetchStoppedNotificationCount_ <= fetchStartedNotificationCount_,
                @"fetch notification imbalance: starts=%d stops=%d",
                fetchStartedNotificationCount_,
                fetchStoppedNotificationCount_);
@@ -1053,6 +1053,34 @@ totalBytesExpectedToSend:expectedBytes];
                @"upload request wrong");
   STAssertEqualObjects(contentLength, @"13", @"content length");
   STAssertEqualObjects(contentRange, @"bytes 0-12/13", @"range");
+
+  //
+  // upload an empty buffer
+  //
+  [self resetFetchResponse];
+
+  fetcher = [GTMHTTPUploadFetcher uploadFetcherWithRequest:request
+                                                uploadData:[NSData data]
+                                            uploadMIMEType:@"text/plain"
+                                                 chunkSize:75000
+                                            fetcherService:nil];
+
+  [fetcher beginFetchWithDelegate:self
+                didFinishSelector:finishedSel];
+
+  [fetcher waitForCompletionWithTimeout:kGiveUpInterval];
+
+  // check that we fetched the expected data
+  STAssertEqualObjects(fetchedData_, gettysburgAddress,
+                       @"unexpected response data");
+  STAssertNotNil(fetchedResponse_,
+                 @"failed to get fetch response, status:%d error:%@",
+                 fetchedStatus_, fetcherError_);
+  STAssertNotNil(fetchedRequest_,
+                 @"failed to get fetch request, URL %@", urlString);
+  STAssertNil(fetcherError_, @"fetching data gave error: %@", fetcherError_);
+  STAssertEquals(fetchedStatus_, 200,
+                 @"unexpected status for URL %@", urlString);
 
   //
   // delete the big file

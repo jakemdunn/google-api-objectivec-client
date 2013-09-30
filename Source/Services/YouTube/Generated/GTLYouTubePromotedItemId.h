@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubePromotedItemId (0 custom class methods, 2 custom properties)
+//   GTLYouTubePromotedItemId (0 custom class methods, 4 custom properties)
 
 #if GTL_BUILT_AS_FRAMEWORK
   #import "GTL/GTLObject.h"
@@ -34,14 +34,21 @@
   #import "GTLObject.h"
 #endif
 
+@class GTLYouTubeChannelId;
+
 // ----------------------------------------------------------------------------
 //
 //   GTLYouTubePromotedItemId
 //
 
-// Describes a single promoted item. It is a union of various possible types.
+// Describes a single promoted item id. It is a union of various possible types.
 
 @interface GTLYouTubePromotedItemId : GTLObject
+
+// If type is recentUpload, this field identifies the channel from which to take
+// the recent upload. If missing, the channel is assumed to be the same channel
+// for which the invideoPromotion is set.
+@property (retain) GTLYouTubeChannelId *recentlyUploadedBy;
 
 // Describes the type of the promoted item.
 @property (copy) NSString *type;
@@ -50,5 +57,10 @@
 // YouTube ID identifying it. This field will be present only if type has the
 // value video.
 @property (copy) NSString *videoId;
+
+// If the promoted item represents a website, this field represents the url
+// pointing to the website. This field will be present only if type has the
+// value website.
+@property (copy) NSString *websiteUrl;
 
 @end

@@ -17,8 +17,6 @@
 //  GTMHTTPFetcher.m
 //
 
-#define GTMHTTPFETCHER_DEFINE_GLOBALS 1
-
 #import "GTMHTTPFetcher.h"
 
 #if GTM_BACKGROUND_FETCHING
@@ -27,6 +25,17 @@
 
 static id <GTMCookieStorageProtocol> gGTMFetcherStaticCookieStorage = nil;
 static Class gGTMFetcherConnectionClass = nil;
+
+
+NSString *const kGTMHTTPFetcherStartedNotification           = @"kGTMHTTPFetcherStartedNotification";
+NSString *const kGTMHTTPFetcherStoppedNotification           = @"kGTMHTTPFetcherStoppedNotification";
+NSString *const kGTMHTTPFetcherRetryDelayStartedNotification = @"kGTMHTTPFetcherRetryDelayStartedNotification";
+NSString *const kGTMHTTPFetcherRetryDelayStoppedNotification = @"kGTMHTTPFetcherRetryDelayStoppedNotification";
+
+NSString *const kGTMHTTPFetcherErrorDomain       = @"com.google.GTMHTTPFetcher";
+NSString *const kGTMHTTPFetcherStatusDomain      = @"com.google.HTTPStatus";
+NSString *const kGTMHTTPFetcherErrorChallengeKey = @"challenge";
+NSString *const kGTMHTTPFetcherStatusDataKey     = @"data";  // data returned with a kGTMHTTPFetcherStatusDomain error
 
 // The default max retry interview is 10 minutes for uploads (POST/PUT/PATCH),
 // 1 minute for downloads.
@@ -97,6 +106,7 @@ static NSString *const kCallbackError = @"error";
 @interface GTMHTTPFetcher (GTMHTTPFetcherLoggingInternal)
 - (void)setupStreamLogging;
 - (void)logFetchWithError:(NSError *)error;
+- (void)logNowWithError:(NSError *)error;
 @end
 
 @implementation GTMHTTPFetcher
@@ -1179,7 +1189,6 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
   BOOL shouldDeferLogging = NO;
 #endif
   BOOL shouldBeginRetryTimer = NO;
-  BOOL hasLogged = NO;
 
   @synchronized(self) {
     // We no longer need to cancel the connection
@@ -1198,9 +1207,11 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 
     NSInteger status = [self statusCode];
     if ([self cachedDataForStatus] != nil) {
+#if !STRIP_GTM_FETCH_LOGGING
       // Log the pre-cache response.
       [self logNowWithError:nil];
-      hasLogged = YES;
+      hasLoggedError_ = YES;
+#endif
       status = [self statusAfterHandlingNotModifiedError];
     }
 
@@ -1225,10 +1236,12 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
       }
     } else {
       // unsuccessful
-      if (!hasLogged) {
+#if !STRIP_GTM_FETCH_LOGGING
+      if (!hasLoggedError_) {
         [self logNowWithError:nil];
-        hasLogged = YES;
+        hasLoggedError_ = YES;
       }
+#endif
       // Status over 300; retry or notify the delegate of failure
       if ([self shouldRetryNowForStatus:status error:nil]) {
         // retrying
@@ -1274,15 +1287,13 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     [self stopFetchReleasingCallbacks:shouldRelease];
   }
 
-  @synchronized(self) {
-    BOOL shouldLogNow = !hasLogged;
 #if !STRIP_GTM_FETCH_LOGGING
-    if (shouldDeferLogging) shouldLogNow = NO;
-#endif
-    if (shouldLogNow) {
+  @synchronized(self) {
+    if (!shouldDeferLogging && !hasLoggedError_) {
       [self logNowWithError:nil];
     }
   }
+#endif
 }
 
 - (BOOL)shouldReleaseCallbacksUponCompletion {

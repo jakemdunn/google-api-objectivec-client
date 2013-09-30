@@ -37,6 +37,8 @@
 // Authorization scope
 // View and manage the files and documents in your Google Drive
 GTL_EXTERN NSString * const kGTLAuthScopeDrive;                 // "https://www.googleapis.com/auth/drive"
+// View and manage its own configuration data in your Google Drive
+GTL_EXTERN NSString * const kGTLAuthScopeDriveAppdata;          // "https://www.googleapis.com/auth/drive.appdata"
 // View your Google Drive apps
 GTL_EXTERN NSString * const kGTLAuthScopeDriveAppsReadonly;     // "https://www.googleapis.com/auth/drive.apps.readonly"
 // View and manage Google Drive files that you have opened or created with this
@@ -52,3 +54,7 @@ GTL_EXTERN NSString * const kGTLAuthScopeDriveScripts;          // "https://www.
 // Projection
 GTL_EXTERN NSString * const kGTLDriveProjectionBasic;  // "BASIC"
 GTL_EXTERN NSString * const kGTLDriveProjectionFull;   // "FULL"
+
+// Visibility
+GTL_EXTERN NSString * const kGTLDriveVisibilityDefault;  // "DEFAULT"
+GTL_EXTERN NSString * const kGTLDriveVisibilityPrivate;  // "PRIVATE"

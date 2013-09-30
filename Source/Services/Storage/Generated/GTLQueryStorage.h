@@ -26,8 +26,7 @@
 // Documentation:
 //   https://developers.google.com/storage/docs/json_api/
 // Classes:
-//   GTLQueryStorage (34 custom class methods, 39 custom properties)
-//   GTLStorageChannelsStopParams (0 custom class methods, 0 custom properties)
+//   GTLQueryStorage (34 custom class methods, 30 custom properties)
 //   GTLStorageObjectsComposeSourceObjectsItem (0 custom class methods, 3 custom properties)
 //   GTLStorageObjectsComposeSourceObjectsItemObjectPreconditions (0 custom class methods, 1 custom properties)
 
@@ -40,7 +39,6 @@
 @class GTLStorageBucket;
 @class GTLStorageBucketAccessControl;
 @class GTLStorageChannel;
-@class GTLStorageChannelsStopParams;
 @class GTLStorageObject;
 @class GTLStorageObjectAccessControl;
 @class GTLStorageObjectsComposeSourceObjectsItem;
@@ -57,19 +55,14 @@
 //
 // Method-specific parameters; see the comments below for more information.
 //
-@property (copy) NSString *address;
 @property (copy) NSString *bucket;
-@property (retain) GTLStorageChannel *channel;
 @property (copy) NSString *delimiter;
 @property (retain) GTLStorageObject *destination;
 @property (retain) GTLStorageObject *destinationResource;
 @property (copy) NSString *destinationBucket;
 @property (copy) NSString *destinationObject;
 @property (copy) NSString *entity;
-@property (assign) long long expiration;
 @property (assign) unsigned long long generation;
-// identifier property maps to 'id' in JSON (to avoid Objective C's 'id').
-@property (copy) NSString *identifier;
 @property (assign) unsigned long long ifGenerationMatch;
 @property (assign) unsigned long long ifGenerationNotMatch;
 @property (assign) unsigned long long ifMetagenerationMatch;
@@ -83,18 +76,13 @@
 @property (copy) NSString *name;
 @property (copy) NSString *object;
 @property (copy) NSString *pageToken;
-@property (retain) GTLStorageChannelsStopParams *params;
 @property (copy) NSString *prefix;
 @property (copy) NSString *project;
 @property (copy) NSString *projection;
-@property (copy) NSString *resourceId;
-@property (copy) NSString *resourceUri;
 @property (copy) NSString *sourceBucket;
 @property (assign) unsigned long long sourceGeneration;
 @property (copy) NSString *sourceObject;
 @property (retain) NSArray *sourceObjects;  // of GTLStorageObjectsComposeSourceObjectsItem
-@property (copy) NSString *token;
-@property (copy) NSString *type;
 @property (assign) BOOL versions;
 
 #pragma mark -
@@ -290,24 +278,12 @@
 // These create a GTLQueryStorage object.
 
 // Method: storage.channels.stop
-//  Optional:
-//   address: The address of the receiving entity where events are delivered.
-//     Specific to the channel type.
-//   expiration: The expiration instant for this channel if it is defined.
-//   identifier: A UUID for the channel
-//   kind: A channel watching an API resource (Default api#channel)
-//   params: Additional parameters controlling delivery channel behavior
-//   resourceId: An opaque id that identifies the resource that is being
-//     watched. Stable across different API versions
-//   resourceUri: The canonicalized ID of the watched resource.
-//   token: An arbitrary string associated with the channel that is delivered to
-//     the target address with each event delivered over this channel.
-//   type: The type of delivery mechanism used by this channel
+// Stop watching resources through this channel
 //  Authorization scope(s):
 //   kGTLAuthScopeStorageDevstorageFullControl
 //   kGTLAuthScopeStorageDevstorageReadOnly
 //   kGTLAuthScopeStorageDevstorageReadWrite
-+ (id)queryForChannelsStop;
++ (id)queryForChannelsStopWithObject:(GTLStorageChannel *)object;
 
 #pragma mark -
 #pragma mark "defaultObjectAccessControls" methods
@@ -726,7 +702,6 @@
 //  Required:
 //   bucket: Name of the bucket in which to look for objects.
 //  Optional:
-//   channel: GTLStorageChannel
 //   delimiter: Returns results in a directory-like mode. items will contain
 //     only objects whose names, aside from the prefix, do not contain
 //     delimiter. Objects whose names, aside from the prefix, contain delimiter
@@ -746,7 +721,8 @@
 //   kGTLAuthScopeStorageDevstorageReadOnly
 //   kGTLAuthScopeStorageDevstorageReadWrite
 // Fetches a GTLStorageChannel.
-+ (id)queryForObjectsWatchAllWithBucket:(NSString *)bucket;
++ (id)queryForObjectsWatchAllWithObject:(GTLStorageChannel *)object
+                                 bucket:(NSString *)bucket;
 
 @end
 
@@ -754,22 +730,6 @@
 #pragma mark method parameter objects
 // These object are used only to pass a collection of parameters to a
 // method as a single item.
-
-// ----------------------------------------------------------------------------
-//
-//   GTLStorageChannelsStopParams
-//
-
-// Used for 'params' parameter on 'storage.channels.stop'.
-
-// Additional parameters controlling delivery channel behavior
-
-@interface GTLStorageChannelsStopParams : GTLObject
-// This object is documented as having more properties that are NSString. Use
-// -additionalJSONKeys and -additionalPropertyForName: to get the list of
-// properties and then fetch them; or -additionalProperties to fetch them all at
-// once.
-@end
 
 @class GTLStorageObjectsComposeSourceObjectsItemObjectPreconditions;
 

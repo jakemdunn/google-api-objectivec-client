@@ -30,6 +30,7 @@
 
 // Authorization scope
 NSString * const kGTLAuthScopeDrive                 = @"https://www.googleapis.com/auth/drive";
+NSString * const kGTLAuthScopeDriveAppdata          = @"https://www.googleapis.com/auth/drive.appdata";
 NSString * const kGTLAuthScopeDriveAppsReadonly     = @"https://www.googleapis.com/auth/drive.apps.readonly";
 NSString * const kGTLAuthScopeDriveFile             = @"https://www.googleapis.com/auth/drive.file";
 NSString * const kGTLAuthScopeDriveMetadataReadonly = @"https://www.googleapis.com/auth/drive.metadata.readonly";
@@ -39,3 +40,7 @@ NSString * const kGTLAuthScopeDriveScripts          = @"https://www.googleapis.c
 // Projection
 NSString * const kGTLDriveProjectionBasic = @"BASIC";
 NSString * const kGTLDriveProjectionFull  = @"FULL";
+
+// Visibility
+NSString * const kGTLDriveVisibilityDefault = @"DEFAULT";
+NSString * const kGTLDriveVisibilityPrivate = @"PRIVATE";

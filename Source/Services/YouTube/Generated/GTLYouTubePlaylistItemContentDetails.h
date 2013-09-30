@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,9 +38,6 @@
 //
 //   GTLYouTubePlaylistItemContentDetails
 //
-
-// Details about the content of a playlist item, such as the video or the video
-// fragment start and end time included in the playlist.
 
 @interface GTLYouTubePlaylistItemContentDetails : GTLObject
 

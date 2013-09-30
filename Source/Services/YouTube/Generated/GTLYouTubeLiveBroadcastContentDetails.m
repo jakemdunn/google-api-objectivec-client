@@ -26,10 +26,11 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubeLiveBroadcastContentDetails (0 custom class methods, 7 custom properties)
-//   GTLYouTubeLiveBroadcastContentDetailsMonitorStream (0 custom class methods, 3 custom properties)
+//   GTLYouTubeLiveBroadcastContentDetails (0 custom class methods, 8 custom properties)
 
 #import "GTLYouTubeLiveBroadcastContentDetails.h"
+
+#import "GTLYouTubeMonitorStreamInfo.h"
 
 // ----------------------------------------------------------------------------
 //
@@ -37,16 +38,6 @@
 //
 
 @implementation GTLYouTubeLiveBroadcastContentDetails
-@dynamic boundStreamId, enableContentEncryption, enableDvr, enableEmbed,
-         monitorStream, recordFromStart, startWithSlate;
-@end
-
-
-// ----------------------------------------------------------------------------
-//
-//   GTLYouTubeLiveBroadcastContentDetailsMonitorStream
-//
-
-@implementation GTLYouTubeLiveBroadcastContentDetailsMonitorStream
-@dynamic broadcastStreamDelayMs, embedHtml, enableMonitorStream;
+@dynamic boundStreamId, enableClosedCaptions, enableContentEncryption,
+         enableDvr, enableEmbed, monitorStream, recordFromStart, startWithSlate;
 @end
