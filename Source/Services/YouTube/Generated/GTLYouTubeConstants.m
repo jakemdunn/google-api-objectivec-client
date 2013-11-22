@@ -33,7 +33,7 @@ NSString * const kGTLAuthScopeYouTube                          = @"https://www.g
 NSString * const kGTLAuthScopeYouTubeReadonly                  = @"https://www.googleapis.com/auth/youtube.readonly";
 NSString * const kGTLAuthScopeYouTubeUpload                    = @"https://www.googleapis.com/auth/youtube.upload";
 NSString * const kGTLAuthScopeYouTubeYoutubepartner            = @"https://www.googleapis.com/auth/youtubepartner";
-NSString * const kGTLAuthScopeYouTubeYoutubepartnerChannelAudition = @"https://www.googleapis.com/auth/youtubepartner-channel-audition";
+NSString * const kGTLAuthScopeYouTubeYoutubepartnerChannelAudit = @"https://www.googleapis.com/auth/youtubepartner-channel-audit";
 
 // BroadcastStatus
 NSString * const kGTLYouTubeBroadcastStatusActive    = @"active";

@@ -14,31 +14,39 @@
  */
 
 //
-//  GTLYouTubeChannelId.h
+//  GTLDoubleClickBidManagerUploadStatus.m
 //
 
 // ----------------------------------------------------------------------------
 // NOTE: This file is generated from Google APIs Discovery Service.
 // Service:
-//   YouTube Data API (youtube/v3)
+//   DoubleClick Bid Manager API (doubleclickbidmanager/v1)
 // Description:
-//   Programmatic access to YouTube features.
+//   API for viewing and managing your reports in DoubleClick Bid Manager.
 // Documentation:
-//   https://developers.google.com/youtube/v3
+//   https://developers.google.com/bid-manager/
 // Classes:
-//   GTLYouTubeChannelId (0 custom class methods, 1 custom properties)
+//   GTLDoubleClickBidManagerUploadStatus (0 custom class methods, 2 custom properties)
 
-#if GTL_BUILT_AS_FRAMEWORK
-  #import "GTL/GTLObject.h"
-#else
-  #import "GTLObject.h"
-#endif
+#import "GTLDoubleClickBidManagerUploadStatus.h"
+
+#import "GTLDoubleClickBidManagerRowStatus.h"
 
 // ----------------------------------------------------------------------------
 //
-//   GTLYouTubeChannelId
+//   GTLDoubleClickBidManagerUploadStatus
 //
 
-@interface GTLYouTubeChannelId : GTLObject
-@property (copy) NSString *value;
+@implementation GTLDoubleClickBidManagerUploadStatus
+@dynamic errors, rowStatus;
+
++ (NSDictionary *)arrayPropertyToClassMap {
+  NSDictionary *map =
+    [NSDictionary dictionaryWithObjectsAndKeys:
+      [NSString class], @"errors",
+      [GTLDoubleClickBidManagerRowStatus class], @"rowStatus",
+      nil];
+  return map;
+}
+
 @end

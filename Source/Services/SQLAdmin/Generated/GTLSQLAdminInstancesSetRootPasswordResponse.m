@@ -14,27 +14,32 @@
  */
 
 //
-//  GTLYouTubeChannelId.m
+//  GTLSQLAdminInstancesSetRootPasswordResponse.m
 //
 
 // ----------------------------------------------------------------------------
 // NOTE: This file is generated from Google APIs Discovery Service.
 // Service:
-//   YouTube Data API (youtube/v3)
+//   Cloud SQL Administration API (sqladmin/v1beta3)
 // Description:
-//   Programmatic access to YouTube features.
+//   API for Cloud SQL database instance management.
 // Documentation:
-//   https://developers.google.com/youtube/v3
+//   https://developers.google.com/cloud-sql/docs/admin-api/
 // Classes:
-//   GTLYouTubeChannelId (0 custom class methods, 1 custom properties)
+//   GTLSQLAdminInstancesSetRootPasswordResponse (0 custom class methods, 2 custom properties)
 
-#import "GTLYouTubeChannelId.h"
+#import "GTLSQLAdminInstancesSetRootPasswordResponse.h"
 
 // ----------------------------------------------------------------------------
 //
-//   GTLYouTubeChannelId
+//   GTLSQLAdminInstancesSetRootPasswordResponse
 //
 
-@implementation GTLYouTubeChannelId
-@dynamic value;
+@implementation GTLSQLAdminInstancesSetRootPasswordResponse
+@dynamic kind, operation;
+
++ (void)load {
+  [self registerObjectClassForKind:@"sql#instancesSetRootPassword"];
+}
+
 @end

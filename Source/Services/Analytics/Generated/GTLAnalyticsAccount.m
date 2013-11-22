@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Google Inc.
+/* Copyright (c) 2013 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,9 @@
 // Documentation:
 //   https://developers.google.com/analytics/
 // Classes:
-//   GTLAnalyticsAccount (0 custom class methods, 7 custom properties)
+//   GTLAnalyticsAccount (0 custom class methods, 8 custom properties)
 //   GTLAnalyticsAccountChildLink (0 custom class methods, 2 custom properties)
+//   GTLAnalyticsAccountPermissions (0 custom class methods, 1 custom properties)
 
 #import "GTLAnalyticsAccount.h"
 
@@ -37,7 +38,8 @@
 //
 
 @implementation GTLAnalyticsAccount
-@dynamic childLink, created, identifier, kind, name, selfLink, updated;
+@dynamic childLink, created, identifier, kind, name, permissions, selfLink,
+         updated;
 
 + (NSDictionary *)propertyToJSONKeyMap {
   NSDictionary *map =
@@ -60,4 +62,22 @@
 
 @implementation GTLAnalyticsAccountChildLink
 @dynamic href, type;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLAnalyticsAccountPermissions
+//
+
+@implementation GTLAnalyticsAccountPermissions
+@dynamic effective;
+
++ (NSDictionary *)arrayPropertyToClassMap {
+  NSDictionary *map =
+    [NSDictionary dictionaryWithObject:[NSString class]
+                                forKey:@"effective"];
+  return map;
+}
+
 @end

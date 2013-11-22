@@ -26,9 +26,10 @@
 // Documentation:
 //   https://developers.google.com/analytics/
 // Classes:
-//   GTLAnalyticsWebproperty (0 custom class methods, 14 custom properties)
+//   GTLAnalyticsWebproperty (0 custom class methods, 16 custom properties)
 //   GTLAnalyticsWebpropertyChildLink (0 custom class methods, 2 custom properties)
 //   GTLAnalyticsWebpropertyParentLink (0 custom class methods, 2 custom properties)
+//   GTLAnalyticsWebpropertyPermissions (0 custom class methods, 1 custom properties)
 
 #import "GTLAnalyticsWebproperty.h"
 
@@ -38,9 +39,9 @@
 //
 
 @implementation GTLAnalyticsWebproperty
-@dynamic accountId, childLink, created, identifier, industryVertical,
-         internalWebPropertyId, kind, level, name, parentLink, profileCount,
-         selfLink, updated, websiteUrl;
+@dynamic accountId, childLink, created, defaultProfileId, identifier,
+         industryVertical, internalWebPropertyId, kind, level, name, parentLink,
+         permissions, profileCount, selfLink, updated, websiteUrl;
 
 + (NSDictionary *)propertyToJSONKeyMap {
   NSDictionary *map =
@@ -73,4 +74,22 @@
 
 @implementation GTLAnalyticsWebpropertyParentLink
 @dynamic href, type;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLAnalyticsWebpropertyPermissions
+//
+
+@implementation GTLAnalyticsWebpropertyPermissions
+@dynamic effective;
+
++ (NSDictionary *)arrayPropertyToClassMap {
+  NSDictionary *map =
+    [NSDictionary dictionaryWithObject:[NSString class]
+                                forKey:@"effective"];
+  return map;
+}
+
 @end

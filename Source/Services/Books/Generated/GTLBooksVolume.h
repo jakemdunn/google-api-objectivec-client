@@ -27,13 +27,13 @@
 //   https://developers.google.com/books/docs/v1/getting_started
 // Classes:
 //   GTLBooksVolume (0 custom class methods, 11 custom properties)
-//   GTLBooksVolumeAccessInfo (0 custom class methods, 11 custom properties)
+//   GTLBooksVolumeAccessInfo (0 custom class methods, 12 custom properties)
 //   GTLBooksVolumeLayerInfo (0 custom class methods, 1 custom properties)
 //   GTLBooksVolumeRecommendedInfo (0 custom class methods, 1 custom properties)
 //   GTLBooksVolumeSaleInfo (0 custom class methods, 8 custom properties)
 //   GTLBooksVolumeSearchInfo (0 custom class methods, 1 custom properties)
 //   GTLBooksVolumeUserInfo (0 custom class methods, 11 custom properties)
-//   GTLBooksVolumeVolumeInfo (0 custom class methods, 20 custom properties)
+//   GTLBooksVolumeVolumeInfo (0 custom class methods, 21 custom properties)
 //   GTLBooksVolumeAccessInfoEpub (0 custom class methods, 3 custom properties)
 //   GTLBooksVolumeAccessInfoPdf (0 custom class methods, 3 custom properties)
 //   GTLBooksVolumeLayerInfoLayersItem (0 custom class methods, 2 custom properties)
@@ -157,6 +157,11 @@
 
 // Information about epub content. (In LITE projection.)
 @property (retain) GTLBooksVolumeAccessInfoEpub *epub;
+
+// Whether this volume requires that the client explicitly request offline
+// download license rather than have it done automatically when loading the
+// content, if the client supports it.
+@property (retain) NSNumber *explicitOfflineLicenseManagement;  // boolValue
 
 // Information about pdf content. (In LITE projection.)
 @property (retain) GTLBooksVolumeAccessInfoPdf *pdf;
@@ -362,11 +367,14 @@
 // the categories list returned below that has the highest weight.
 @property (copy) NSString *mainCategory;
 
-// Total number of pages.
+// Total number of pages as per publisher metadata.
 @property (retain) NSNumber *pageCount;  // intValue
 
 // URL to preview this volume on the Google Books site.
 @property (copy) NSString *previewLink;
+
+// Total number of printed pages in generated pdf representation.
+@property (retain) NSNumber *printedPageCount;  // intValue
 
 // Type of publication of this volume. Possible values are BOOK or MAGAZINE.
 @property (copy) NSString *printType;

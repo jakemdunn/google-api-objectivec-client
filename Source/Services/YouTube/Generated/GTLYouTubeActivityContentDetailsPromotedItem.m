@@ -26,7 +26,7 @@
 // Documentation:
 //   https://developers.google.com/youtube/v3
 // Classes:
-//   GTLYouTubeActivityContentDetailsPromotedItem (0 custom class methods, 8 custom properties)
+//   GTLYouTubeActivityContentDetailsPromotedItem (0 custom class methods, 10 custom properties)
 
 #import "GTLYouTubeActivityContentDetailsPromotedItem.h"
 
@@ -36,13 +36,16 @@
 //
 
 @implementation GTLYouTubeActivityContentDetailsPromotedItem
-@dynamic adTag, clickTrackingUrl, creativeViewUrl, ctaType, descriptionText,
-         destinationUrl, impressionUrls, videoId;
+@dynamic adTag, clickTrackingUrl, creativeViewUrl, ctaType, customCtaButtonText,
+         descriptionText, destinationUrl, forecastingUrl, impressionUrl,
+         videoId;
 
 + (NSDictionary *)arrayPropertyToClassMap {
   NSDictionary *map =
-    [NSDictionary dictionaryWithObject:[NSString class]
-                                forKey:@"impressionUrls"];
+    [NSDictionary dictionaryWithObjectsAndKeys:
+      [NSString class], @"forecastingUrl",
+      [NSString class], @"impressionUrl",
+      nil];
   return map;
 }
 
